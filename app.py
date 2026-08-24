@@ -476,44 +476,33 @@ def render_header():
 
 def render_info_cards():
 
-    st.markdown(
-        """
-        <div class="section-header">
-            📊 Model Overview
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    st.markdown("## 📊 Model Overview")
 
-    cards = [
-        ("Model", "XGBoost"),
-        ("Features", "TF-IDF"),
-        ("Task", "Binary Classification"),
-        ("Backend", "FastAPI"),
-    ]
+    col1, col2, col3, col4 = st.columns(4)
 
-    columns = st.columns(4)
+    with col1:
+        st.metric(
+            label="🤖 Model",
+            value="XGBoost"
+        )
 
-    for column, (label, value) in zip(columns, cards):
+    with col2:
+        st.metric(
+            label="📄 Features",
+            value="TF-IDF"
+        )
 
-        with column:
+    with col3:
+        st.metric(
+            label="🎯 Task",
+            value="Binary Classification"
+        )
 
-            st.markdown(
-                f"""
-                <div class="info-card">
-
-                    <div class="info-card-label">
-                        {label}
-                    </div>
-
-                    <div class="info-card-value">
-                        {value}
-                    </div>
-
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
+    with col4:
+        st.metric(
+            label="⚡ Backend",
+            value="FastAPI"
+        )
 
 
 def render_examples():
@@ -604,9 +593,7 @@ def display_result(result: dict):
         st.session_state.sms_text,
     )
 
-    # ============================================================
-    # SPAM
-    # ============================================================
+    st.markdown("## 🔎 Analysis Result")
 
     if prediction == "spam":
 
@@ -614,18 +601,23 @@ def display_result(result: dict):
             "🚨 SPAM DETECTED"
         )
 
-        st.markdown(
-            """
-            ### This message appears to be a spam message.
-
-            **Prediction:** Spam  
-            **Model:** XGBoost + TF-IDF
-            """
+        st.write(
+            "This message appears to be a spam message."
         )
 
-    # ============================================================
-    # HAM
-    # ============================================================
+        col1, col2 = st.columns(2)
+
+        with col1:
+            st.metric(
+                "Prediction",
+                "Spam"
+            )
+
+        with col2:
+            st.metric(
+                "Model",
+                "XGBoost + TF-IDF"
+            )
 
     elif prediction == "ham":
 
@@ -633,30 +625,33 @@ def display_result(result: dict):
             "✅ HAM / SAFE"
         )
 
-        st.markdown(
-            """
-            ### This message appears to be a legitimate SMS.
-
-            **Prediction:** Ham  
-            **Model:** XGBoost + TF-IDF
-            """
+        st.write(
+            "This message appears to be a legitimate SMS."
         )
 
-    # ============================================================
-    # UNKNOWN
-    # ============================================================
+        col1, col2 = st.columns(2)
+
+        with col1:
+            st.metric(
+                "Prediction",
+                "Ham"
+            )
+
+        with col2:
+            st.metric(
+                "Model",
+                "XGBoost + TF-IDF"
+            )
 
     else:
 
         st.warning(
-            f"⚠️ Unknown prediction returned by API: `{prediction}`"
+            f"⚠️ Unknown prediction returned by API: "
+            f"`{prediction}`"
         )
 
-    # ============================================================
-    # ANALYZED MESSAGE
-    # ============================================================
+    with st.expander("📨 View analyzed message"):
 
-    with st.expander("View analyzed message"):
         st.write(input_text)
 
 
@@ -664,85 +659,56 @@ def render_sidebar(api_online: bool):
 
     with st.sidebar:
 
-        st.markdown("## 📩 SpamGuard AI")
+        st.title("📩 SpamGuard AI")
 
         st.caption(
             "AI-Powered SMS Spam Detection"
         )
 
-        st.markdown("---")
+        st.divider()
 
-
-        # --------------------------------------------------------------------
-        # About
-        # --------------------------------------------------------------------
-
-        st.markdown("### ℹ️ About")
+        st.subheader("ℹ️ About")
 
         st.write(
             "SpamGuard AI classifies SMS messages as "
-            "**Spam** or **Ham** using an XGBoost machine-learning "
-            "model served through a FastAPI backend."
+            "**Spam** or **Ham** using an XGBoost "
+            "machine-learning model served through "
+            "a FastAPI backend."
         )
 
-
-        # --------------------------------------------------------------------
-        # Technology Stack
-        # --------------------------------------------------------------------
-
-        st.markdown("### 🛠️ Technology Stack")
+        st.subheader("🛠️ Technology Stack")
 
         st.markdown(
             """
-            - Python
-            - FastAPI
-            - Streamlit
-            - XGBoost
-            - TF-IDF
-            - Scikit-learn
+            - 🐍 Python
+            - ⚡ FastAPI
+            - 🎨 Streamlit
+            - 🤖 XGBoost
+            - 📄 TF-IDF
+            - 📊 Scikit-learn
             """
         )
 
-
-        # --------------------------------------------------------------------
-        # API Status
-        # --------------------------------------------------------------------
-
-        st.markdown("### 🔌 API Status")
+        st.subheader("🔌 API Status")
 
         if api_online:
 
-            st.markdown(
-                """
-                <span class="status-badge status-online">
-                    🟢 API Online
-                </span>
-                """,
-                unsafe_allow_html=True,
+            st.success(
+                "🟢 API Online"
             )
 
         else:
 
-            st.markdown(
-                """
-                <span class="status-badge status-offline">
-                    🔴 API Offline
-                </span>
-                """,
-                unsafe_allow_html=True,
+            st.error(
+                "🔴 API Offline"
             )
 
             st.caption(
-                "The production API is currently unavailable. "
-                "Please try again later."
+                "The production API is currently "
+                "unavailable. Please try again later."
             )
 
-
-        # --------------------------------------------------------------------
-        # API Information
-        # --------------------------------------------------------------------
-
-        st.markdown("### 🌐 API Information")
+        st.subheader("🌐 API Information")
 
         st.code(
             f"""
@@ -758,11 +724,10 @@ Docs:
             language="text",
         )
 
-
-        st.markdown("---")
+        st.divider()
 
         st.caption(
-            "Built with Streamlit · "
+            "Built with Streamlit • "
             "Powered by FastAPI + XGBoost"
         )
 
@@ -774,7 +739,7 @@ Docs:
 def main():
 
     # Load CSS
-    load_css()
+    
 
 
     # Check production API
