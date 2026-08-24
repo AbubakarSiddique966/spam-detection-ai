@@ -12,7 +12,7 @@ import requests
 # --------------------------------------------------------------------------
 # CONFIG
 # --------------------------------------------------------------------------
-API_BASE_URL = "http://127.0.0.1:8000"
+API_BASE_URL = "https://spam-detection-ai.fastapicloud.dev/"
 PREDICT_ENDPOINT = f"{API_BASE_URL}/predict"
 HEALTH_ENDPOINT = f"{API_BASE_URL}/"
 REQUEST_TIMEOUT = 8  # seconds
