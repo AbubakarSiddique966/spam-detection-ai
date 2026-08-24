@@ -605,65 +605,45 @@ def display_result(result: dict):
     )
 
     # ============================================================
-    # SPAM RESULT
+    # SPAM
     # ============================================================
 
     if prediction == "spam":
 
+        st.error(
+            "🚨 SPAM DETECTED"
+        )
+
         st.markdown(
             """
-            <div class="result-card result-spam">
+            ### This message appears to be a spam message.
 
-                <div class="result-title result-title-spam">
-                    🚨 SPAM DETECTED
-                </div>
-
-                <div class="result-explanation">
-                    This message appears to be a spam message.
-                </div>
-
-                <div class="result-meta">
-                    <b>Prediction:</b> Spam
-                    &nbsp; | &nbsp;
-                    <b>Model:</b> XGBoost + TF-IDF
-                </div>
-
-            </div>
-            """,
-            unsafe_allow_html=True,
+            **Prediction:** Spam  
+            **Model:** XGBoost + TF-IDF
+            """
         )
 
     # ============================================================
-    # HAM RESULT
+    # HAM
     # ============================================================
 
     elif prediction == "ham":
 
+        st.success(
+            "✅ HAM / SAFE"
+        )
+
         st.markdown(
             """
-            <div class="result-card result-ham">
+            ### This message appears to be a legitimate SMS.
 
-                <div class="result-title result-title-ham">
-                    ✅ HAM / SAFE
-                </div>
-
-                <div class="result-explanation">
-                    This message appears to be a legitimate SMS.
-                </div>
-
-                <div class="result-meta">
-                    <b>Prediction:</b> Ham
-                    &nbsp; | &nbsp;
-                    <b>Model:</b> XGBoost + TF-IDF
-                </div>
-
-            </div>
-            """,
-            unsafe_allow_html=True,
+            **Prediction:** Ham  
+            **Model:** XGBoost + TF-IDF
+            """
         )
 
     # ============================================================
-    # UNKNOWN RESULT
+    # UNKNOWN
     # ============================================================
 
     else:
